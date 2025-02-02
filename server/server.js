@@ -2,33 +2,32 @@ require('dotenv').config();
 const express = require("express");
 const app = express();
 const cors = require('cors');
-const stripe = require("stripe")('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');
 const morgan = require('morgan');
 
+// Load Stripe API key from environment variables
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
 app.use(express.json());
-
 app.use(express.urlencoded({ extended: true }));
-
 app.use(morgan('dev'));
 app.use(cors({
-  origin: true,  
-  credentials: true, 
+  origin: true,
+  credentials: true,
 }));
-
 
 app.get('/', (req, res) => {
   res.send({ message: "Hello!" });
-})
+});
+
 // Endpoint to create the PaymentIntent
 app.post("/create-payment-intent", async (req, res) => {
   const { amount, customerData } = req.body;
   console.log(req.body);
-  
 
   // Log the incoming amount and customer data for debugging purposes
   console.log("amount is " + amount);
   console.log(customerData);
-  
+
   if (!amount || amount <= 0) {
     return res.status(400).send({ error: "Invalid amount" });
   }
@@ -90,7 +89,7 @@ app.post('/update-payment-amount', async (req, res) => {
       const updatedPaymentIntent = await stripe.paymentIntents.update(paymentIntentId, {
         amount: newAmount,
       });
-    
+
       // Send the updated PaymentIntent to the frontend
       res.status(200).json(updatedPaymentIntent);
     } else {
