@@ -1,0 +1,8 @@
+
+@import "tailwindcss";
+
+
+@theme {
+  --breakpoint-xl: 1200px;
+  
+}
