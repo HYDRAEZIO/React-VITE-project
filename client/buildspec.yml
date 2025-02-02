@@ -9,12 +9,12 @@ frontend:
     build:
       commands:
         - echo Building the project...
-        - npm run build  # Vite build command (or the appropriate command for your project)
+        - npm run build  # This assumes 'npm run build' is your Vite build command
 
   artifacts:
-    baseDirectory: /client/dist  # Adjust this path to your build output folder
+    baseDirectory: dist  # Adjust this if your Vite project outputs to a different directory
     files:
-      - '**/*'
+      - '**/*'  # Include all files in the dist folder
 
   cache:
     paths:
