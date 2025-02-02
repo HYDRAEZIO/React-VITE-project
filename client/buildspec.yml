@@ -1,0 +1,21 @@
+version: 0.2
+
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - echo Installing dependencies...
+        - npm install
+    build:
+      commands:
+        - echo Building the project...
+        - npm run build  # Vite build command (or the appropriate command for your project)
+
+  artifacts:
+    baseDirectory: /client/dist  # Adjust this path to your build output folder
+    files:
+      - '**/*'
+
+  cache:
+    paths:
+      - node_modules/**/*
